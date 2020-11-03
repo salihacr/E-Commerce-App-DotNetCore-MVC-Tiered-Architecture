@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace E_Commerce.DataAccess.Abstract
 {
     public interface IRepository<T>
