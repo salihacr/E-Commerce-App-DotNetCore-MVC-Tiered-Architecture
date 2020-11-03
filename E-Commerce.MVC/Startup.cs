@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using E_Commerce.Business.Abstract;
+using E_Commerce.Business.Concrete;
 using E_Commerce.DataAccess.Abstract;
 using E_Commerce.DataAccess.Concrete.EntityFrameworkCoreSqlServer;
 using Microsoft.AspNetCore.Builder;
@@ -33,6 +35,10 @@ namespace E_Commerce.MVC
             // repository dependency injection data access
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            
+            // service dependency injection data access
+            services.AddScoped<IProductService, ProductManager>();
+
 
             // MVC
             // RAZOR PAGES
