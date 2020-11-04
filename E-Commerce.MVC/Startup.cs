@@ -60,9 +60,10 @@ namespace E_Commerce.MVC
                 RequestPath = "/modules"
             });
 
-
+            // uygulama geliştirme sırasında bu bölge çalışır
             if (env.IsDevelopment())
             {
+                SeedDatabase.Seed();
                 app.UseDeveloperExceptionPage();
             }
 
