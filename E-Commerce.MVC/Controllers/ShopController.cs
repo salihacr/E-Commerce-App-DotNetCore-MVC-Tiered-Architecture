@@ -31,11 +31,11 @@ namespace E_Commerce.MVC.Controllers
                 Categories = product.ProductCategories.Select(i => i.Category).ToList()
             });
         }
-        public IActionResult List()
+        public IActionResult List(string category)
         {
             var productViewModel = new ProductListViewModel()
             {
-                Products = _productService.GetAll()
+                Products = _productService.GetProductsByCategory(category)
             };
 
             return View(productViewModel);

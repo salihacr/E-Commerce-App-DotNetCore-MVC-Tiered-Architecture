@@ -39,6 +39,11 @@ namespace E_Commerce.Business.Concrete
             return _productRepository.GetProductDetails(id);
         }
 
+        public List<Product> GetProductsByCategory(string name)
+        {
+            return _productRepository.GetProductsByCategory(name);
+        }
+
         public void Update(Product entity)
         {
             _productRepository.Update(entity);

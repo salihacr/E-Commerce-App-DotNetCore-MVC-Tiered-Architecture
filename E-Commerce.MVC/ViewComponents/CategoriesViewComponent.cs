@@ -4,18 +4,18 @@ using E_Commerce.Business.Abstract;
 
 namespace E_Commerce.MVC.ViewComponents
 {
-    public class CategoriesViewComponent:ViewComponent
+    public class CategoriesViewComponent : ViewComponent
     {
         private ICategoryService _categoryService;
         public CategoriesViewComponent(ICategoryService categoryService)
         {
-            _categoryService=categoryService;
+            _categoryService = categoryService;
         }
 
         public IViewComponentResult Invoke()
         {
-            if (RouteData.Values["action"].ToString()=="list")
-                ViewBag.SelectedCategory = RouteData?.Values["id"];
+            if (RouteData.Values["category"] != null)
+                ViewBag.SelectedCategory = RouteData?.Values["category"];
             return View(_categoryService.GetAll());
         }
     }

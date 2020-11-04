@@ -24,11 +24,11 @@ namespace E_Commerce.DataAccess.Concrete.EntityFrameworkCoreSqlServer
             context.SaveChanges();
         }
         private static Category[] Categories = {
-           new Category(){Name="Kadın"},
-           new Category(){Name="Erkek"},
-           new Category(){Name="Sweat"},
-           new Category(){Name="Ayakkabı"},
-           new Category(){Name="Çanta"}
+           new Category(){Name="Kadın",Url="kadin"},
+           new Category(){Name="Erkek",Url="erkek"},
+           new Category(){Name="Sweat",Url="sweat"},
+           new Category(){Name="Ayakkabı",Url="ayakkabi"},
+           new Category(){Name="Çanta",Url="canta"}
         };
         private static Product[] Products = {
            new Product(){Name="T-Shirt", Url="denemeurl", Price=50, Description="iyi tshirt", ImageUrl="1.jpg", IsApproved=true},
