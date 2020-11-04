@@ -23,17 +23,18 @@ namespace E_Commerce.DataAccess.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    ProductId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
+                    Url = table.Column<string>(nullable: true),
                     Price = table.Column<double>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    IsApproved = table.Column<bool>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: false)
+                    ImageUrl = table.Column<string>(nullable: true),
+                    IsApproved = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.ProductId);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,7 +57,7 @@ namespace E_Commerce.DataAccess.Migrations
                         name: "FK_ProductCategory_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
+                        principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                 });
 

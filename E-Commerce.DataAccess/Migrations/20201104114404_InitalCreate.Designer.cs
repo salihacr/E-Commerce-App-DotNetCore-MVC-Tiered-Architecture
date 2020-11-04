@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.DataAccess.Migrations
 {
     [DbContext(typeof(AvocodeContext))]
-    [Migration("20201103182558_InitalCreate")]
+    [Migration("20201104114404_InitalCreate")]
     partial class InitalCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,15 +38,15 @@ namespace E_Commerce.DataAccess.Migrations
 
             modelBuilder.Entity("E_Commerce.Entities.Concrete.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsApproved")
@@ -58,7 +58,10 @@ namespace E_Commerce.DataAccess.Migrations
                     b.Property<double?>("Price")
                         .HasColumnType("float");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProductId");
 
                     b.ToTable("Products");
                 });

@@ -32,14 +32,17 @@ namespace E_Commerce.MVC
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            // repository dependency injection data access
+            // repositories for dependency injection data access
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
-            //services.AddScoped<ICategoryRepository, CategoryRepository>();
 
-            // service dependency injection data access
+            // services for dependency injection business layer
             services.AddScoped<IProductService, ProductManager>();
+            services.AddScoped<ICategoryService, CategoryManager>();
+            services.AddScoped<IOrderService, OrderManager>();
+            services.AddScoped<ICartService, CartManager>();
 
 
             // MVC

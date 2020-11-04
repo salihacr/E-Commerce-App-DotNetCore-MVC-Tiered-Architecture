@@ -2,7 +2,7 @@ using E_Commerce.Business.Abstract;
 
 namespace E_Commerce.Business.Concrete
 {
-    public class CartManager:ICartService
+    public class CategoryManager:ICategoryService
     {
         
     }

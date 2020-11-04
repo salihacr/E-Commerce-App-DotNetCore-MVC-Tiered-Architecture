@@ -28,9 +28,9 @@ namespace E_Commerce.DataAccess.Concrete.EntityFrameworkCoreSqlServer
            new Category(){Name="Çanta"}
         };
         private static Product[] Products = {
-           new Product(){Name="T-Shirt",Price=50,Description="iyi tshirt",IsApproved=true},
-           new Product(){Name="T-Shirt Uzun",Price=30,Description="iyi uzun kol",IsApproved=true},
-           new Product(){Name="T-Shirt Kısa",Price=70,Description="iyi kısa kol",IsApproved=true}
+           new Product(){Name="T-Shirt", Url="denemeurl", Price=50, Description="iyi tshirt", ImageUrl="1.jpg", IsApproved=true},
+           new Product(){Name="T-Shirt uzun", Url="denemeurl2", Price=70, Description="iyi uzun tshirt", ImageUrl="1.jpg", IsApproved=true},
+           new Product(){Name="T-Shirt kısa", Url="denemeurl3", Price=30, Description="iyi kısa tshirt", ImageUrl="1.jpg", IsApproved=true}
         };
     }
 }
