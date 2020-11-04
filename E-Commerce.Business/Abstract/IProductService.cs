@@ -5,6 +5,7 @@ namespace E_Commerce.Business.Abstract
 {
     public interface IProductService
     {
+        Product GetProductDetails(int id);
         Product GetById(int id);
         List<Product> GetAll();
         void Add(Product entity);

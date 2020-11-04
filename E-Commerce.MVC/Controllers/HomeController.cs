@@ -1,30 +1,27 @@
 using System;
+using E_Commerce.Business.Abstract;
 using E_Commerce.DataAccess.Abstract;
+using E_Commerce.MVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commerce.MVC.Controllers
 {
-    // localhost:5000/home
     public class HomeController : Controller
     {
-        private IProductRepository _productRepository;
-        public HomeController(IProductRepository productRepository)
+        private IProductService _productService;
+        public HomeController(IProductService productService)
         {
-            _productRepository = productRepository;
+            this._productService = productService;
         }
-        // default
-        // localhost:5000/home/index
+
         public IActionResult Index()
         {
-            int saat = DateTime.Now.Hour;
-            ViewBag.Greeting = saat > 12 ? "İyi Günler" : "Günaydın";
-            ViewBag.Username = "Salih";
-            return View();
+            var productViewModel = new ProductListViewModel()
+            {
+                Products = _productService.GetAll()
+            };
+
+            return View(productViewModel);
         }
-        // localhost:5000/home/about
-        /*public IActionResult About()
-        {
-            return View();
-        }*/
     }
 }

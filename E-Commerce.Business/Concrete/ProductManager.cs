@@ -8,6 +8,7 @@ namespace E_Commerce.Business.Concrete
     public class ProductManager : IProductService
     {
         IProductRepository _productRepository;
+
         public ProductManager(IProductRepository productRepository)
         {
             _productRepository = productRepository;
@@ -31,6 +32,11 @@ namespace E_Commerce.Business.Concrete
         public Product GetById(int id)
         {
             return _productRepository.GetById(id);
+        }
+
+        public Product GetProductDetails(int id)
+        {
+            return _productRepository.GetProductDetails(id);
         }
 
         public void Update(Product entity)

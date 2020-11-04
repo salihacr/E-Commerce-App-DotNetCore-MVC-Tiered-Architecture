@@ -6,7 +6,7 @@
                 <div class="col-lg-2 col-md-2 col-12">
                     <!-- Logo -->
                     <div class="logo">
-                        <h4>🥑 Avocode</h4>
+                        <h4><a href="/">🥑 Avocode</a></h4>
                     </div>
                     <!--/ End Logo -->
                     <!-- Search Form -->
@@ -16,13 +16,11 @@
                         <!-- Search Form -->
                         <div class="search-top">
                             <form class="search-form">
-                                <input type="text" placeholder="Search here..." name="query">
-                                <button value="search" type="submit"><i class="ti-search"></i></button>
+                                <input type="text" placeholder="Search here..." name="search">
+                                <button value="search" type="submit"><i class="fa fa-search"></i></button>
                             </form>
                         </div>
                         <!--/ End Search Form -->
-
-
                     </div>
                     <!--/ End Search Form -->
                     <div class="mobile-nav"></div>
@@ -30,17 +28,15 @@
                 <div class="col-lg-8 col-md-7 col-12">
                     <div class="search-bar-top">
                         <div class="search-bar">
-                           
-                            <select name="category">
+                            <select>
                                 <option selected="selected">All Category</option>
                                 <option>watch</option>
                                 <option>mobile</option>
                                 <option>kid’s item</option>
                             </select>
-                            <form action="/product/list">
-                                <input type="select" />
+                            <form>
                                 <input name="search" placeholder="Search Products Here....." type="search">
-                                <button class="btnn"><i class="fa fa-search"></i></button>
+                                <button class="btnn"><i class="ti-search"></i></button>
                             </form>
                         </div>
                     </div>
@@ -54,7 +50,7 @@
                         <div class="sinlge-bar shopping">
                             <!-- SEPET -->
                             <a href="#" class="single-icon"><i class="fa fa-shopping-cart"></i> <span
-                                class="total-count">2</span></a>
+                                    class="total-count">2</span></a>
                             <!-- Shopping Item -->
                             <div class="shopping-item">
                                 <div class="dropdown-cart-header">
@@ -64,17 +60,17 @@
                                 <ul class="shopping-list">
                                     <li>
                                         <a href="#" class="remove" title="Remove this item"><i
-                                            class="fa fa-remove"></i></a>
+                                                class="fa fa-remove"></i></a>
                                         <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70"
-                                            alt="#"></a>
+                                                alt="#"></a>
                                         <h4><a href="#">Woman Ring</a></h4>
                                         <p class="quantity">1x - <span class="amount">$99.00</span></p>
                                     </li>
                                     <li>
                                         <a href="#" class="remove" title="Remove this item"><i
-                                            class="fa fa-remove"></i></a>
+                                                class="fa fa-remove"></i></a>
                                         <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70"
-                                            alt="#"></a>
+                                                alt="#"></a>
                                         <h4><a href="#">Woman Necklace</a></h4>
                                         <p class="quantity">1x - <span class="amount">$35.00</span></p>
                                     </li>
@@ -122,17 +118,16 @@
                                 <div class="navbar-collapse">
                                     <div class="nav-inner">
                                         <ul class="nav main-menu menu navbar-nav">
-                                            <li class="active"><a href="#">Home</a></li>
-                                            <li><a href="#">Product</a></li>
-                                            <li><a href="#">Shop<i class="ti-angle-down"></i><span
-                                                    class="new">New</span></a>
+                                            <li><a href="#">Anasayfa</a></li>
+                                            <li><a asp-controller="shop" asp-action="list">Ürünler</a></li>
+
+                                            <li><a href="#">Sepet<i class="ti-angle-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="shop-grid.html">Shop Grid</a></li>
-                                                    <li><a href="cart.html">Cart</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
+                                                    <li><a href="cart.html">Siparişlerim</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="#">Contact Us</a></li>
+
+                                            <li><a href="#">İletişim</a></li>
                                         </ul>
                                     </div>
                                 </div>
