@@ -65,5 +65,18 @@ namespace E_Commerce.DataAccess.Concrete.EntityFrameworkCoreSqlServer
                 return products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             }
         }
+
+        public List<Product> GetSearchResult(string searchString)
+        {
+            using (var context = new AvocodeContext())
+            {
+                var products = context
+                    .Products
+                    .Where(i => i.IsApproved && (i.Name.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())))
+                    .AsQueryable();
+
+                return products.ToList();
+            }
+        }
     }
 }

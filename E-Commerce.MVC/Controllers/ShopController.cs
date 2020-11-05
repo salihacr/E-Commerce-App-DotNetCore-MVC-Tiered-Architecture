@@ -49,5 +49,13 @@ namespace E_Commerce.MVC.Controllers
 
             return View(productViewModel);
         }
+        public IActionResult Search(string q)
+        {
+            var productViewModel = new ProductListViewModel()
+            {
+                Products = _productService.GetSearchResult(q)
+            };
+            return View(productViewModel);
+        }
     }
 }

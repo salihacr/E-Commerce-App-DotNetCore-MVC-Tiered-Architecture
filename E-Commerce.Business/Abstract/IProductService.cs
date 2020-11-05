@@ -9,6 +9,7 @@ namespace E_Commerce.Business.Abstract
         Product GetProductDetails(string url);
         int GetCountByCategory(string category);
         List<Product> GetHomePageProducts();
+        List<Product> GetSearchResult(string searchString);
 
         Product GetById(int id);
         List<Product> GetAll();

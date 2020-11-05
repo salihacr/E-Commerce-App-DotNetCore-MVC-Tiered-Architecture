@@ -7,6 +7,7 @@ namespace E_Commerce.DataAccess.Abstract
     {
         Product GetProductDetails(string url);
         List<Product> GetProductsByCategory(string name, int page, int pageSize);
+        List<Product> GetSearchResult(string searchString);
         List<Product> GetHomePageProducts();
         int GetCountByCategory(string category);
     }
