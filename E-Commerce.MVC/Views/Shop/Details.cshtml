@@ -11,19 +11,20 @@
 
         @foreach (var item in Model.Categories)
         {
-            <a href="#" class="btn btn-link p-0 mb-3">@item.Name</a>
+            <a asp-controller="shop" asp-action="list" asp-route-category="@item.Url"
+                class="btn btn-link p-0 mb-3">@item.Name</a>
         }
-        <a href="#" class="btn btn-link p-0 mb-3"></a>
-        <div class="mb-3">
-            <h4 class="text-primary mb-3">
-                <i class="fa fa-lira-sign"></i> @Model.Product.Price
-            </h4>
-            <button type="submit" class="btn btn-primary btn-large">Add to Cart</button>
+            <a href="#" class="btn btn-link p-0 mb-3"></a>
+            <div class="mb-3">
+                <h4 class="text-primary mb-3">
+                    <i class="fa fa-lira-sign"></i> @Model.Product.Price
+                </h4>
+                <button type="submit" class="btn btn-primary btn-large">Add to Cart</button>
+            </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <p class="p-3">@Model.Product.Description</p>
+    <div class="row">
+        <div class="col-md-12">
+            <p class="p-3">@Model.Product.Description</p>
+        </div>
     </div>
-</div>

@@ -8,12 +8,12 @@ namespace E_Commerce.DataAccess.Concrete.EntityFrameworkCoreSqlServer
 {
     public class ProductRepository : EFCoreGenericRepository<Product, AvocodeContext>, IProductRepository
     {
-        public Product GetProductDetails(int id)
+        public Product GetProductDetails(string url)
         {
             using (var context = new AvocodeContext())
             {
                 return context.Products
-                .Where(i => i.ProductId == id)
+                .Where(i => i.Url == url)
                 .Include(i => i.ProductCategories)
                 .ThenInclude(i => i.Category)
                 .FirstOrDefault();
