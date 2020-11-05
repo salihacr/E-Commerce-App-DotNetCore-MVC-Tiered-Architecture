@@ -31,11 +31,20 @@ namespace E_Commerce.MVC.Controllers
                 Categories = product.ProductCategories.Select(i => i.Category).ToList()
             });
         }
-        public IActionResult List(string category)
+        // localhost:5000/products/sweat?page=1
+        public IActionResult List(string category, int page = 1)
         {
+            const int pageSize = 2;
             var productViewModel = new ProductListViewModel()
             {
-                Products = _productService.GetProductsByCategory(category)
+                PageInfo = new PageInfo()
+                {
+                    TotalItems = _productService.GetCountByCategory(category),
+                    CurrentPage = page,
+                    ItemsPerPage = pageSize,
+                    CurrentCategory = category
+                },
+                Products = _productService.GetProductsByCategory(category, page, pageSize)
             };
 
             return View(productViewModel);

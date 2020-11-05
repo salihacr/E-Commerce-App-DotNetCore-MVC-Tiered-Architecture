@@ -5,8 +5,11 @@ namespace E_Commerce.Business.Abstract
 {
     public interface IProductService
     {
-        List<Product> GetProductsByCategory(string name);
+        List<Product> GetProductsByCategory(string name, int page, int pageSize);
         Product GetProductDetails(string url);
+        int GetCountByCategory(string category);
+        List<Product> GetHomePageProducts();
+
         Product GetById(int id);
         List<Product> GetAll();
         void Add(Product entity);

@@ -18,7 +18,7 @@ namespace E_Commerce.MVC.Controllers
         {
             var productViewModel = new ProductListViewModel()
             {
-                Products = _productService.GetAll()
+                Products = _productService.GetHomePageProducts()
             };
 
             return View(productViewModel);

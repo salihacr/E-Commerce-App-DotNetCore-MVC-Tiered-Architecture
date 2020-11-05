@@ -31,13 +31,13 @@ namespace E_Commerce.DataAccess.Concrete.EntityFrameworkCoreSqlServer
            new Category(){Name="Çanta",Url="canta"}
         };
         private static Product[] Products = {
-           new Product(){Name="T-Shirt", Url="t-shirt1", Price=50, Description="iyi tshirt", ImageUrl="1.jpg", IsApproved=true},
-           new Product(){Name="T-Shirt uzun", Url="t-shirtuzun", Price=70, Description="iyi uzun tshirt", ImageUrl="1.jpg", IsApproved=true},
-           new Product(){Name="T-Shirt kısa", Url="t-shirtkisa", Price=30, Description="iyi kısa tshirt", ImageUrl="1.jpg", IsApproved=true},
-           new Product(){Name="Ayakkabı", Url="ayakkabiadidas", Price=300, Description="güzel ayakkabı", ImageUrl="3.jpg", IsApproved=true},
-           new Product(){Name="Çizme", Url="ayakkabicizme", Price=350, Description="güzel çizme", ImageUrl="10.jpg", IsApproved=true},
-           new Product(){Name="Sırt Çantası", Url="sirtcantasi", Price=120, Description="güzel çanta", ImageUrl="8.jpg", IsApproved=true},
-           new Product(){Name="Kapşonlu", Url="kapsonlu", Price=80, Description="güzel kapşon", ImageUrl="7.jpg", IsApproved=true}
+           new Product(){Name="T-Shirt", Url="t-shirt1", Price=50, Description="iyi tshirt", ImageUrl="1.jpg", IsApproved=true,IsHome=true},
+           new Product(){Name="T-Shirt uzun", Url="t-shirtuzun", Price=70, Description="iyi uzun tshirt", ImageUrl="1.jpg", IsApproved=true,IsHome=true},
+           new Product(){Name="T-Shirt kısa", Url="t-shirtkisa", Price=30, Description="iyi kısa tshirt", ImageUrl="1.jpg", IsApproved=true,IsHome=true},
+           new Product(){Name="Ayakkabı", Url="ayakkabiadidas", Price=300, Description="güzel ayakkabı", ImageUrl="3.jpg", IsApproved=true,IsHome=true},
+           new Product(){Name="Çizme", Url="ayakkabicizme", Price=350, Description="güzel çizme", ImageUrl="10.jpg", IsApproved=false,IsHome=false},
+           new Product(){Name="Sırt Çantası", Url="sirtcantasi", Price=120, Description="güzel çanta", ImageUrl="8.jpg", IsApproved=false,IsHome=false},
+           new Product(){Name="Kapşonlu", Url="kapsonlu", Price=80, Description="güzel kapşon", ImageUrl="7.jpg", IsApproved=false,IsHome=false}
         };
         private static ProductCategory[] ProductCategories ={
             new ProductCategory(){Product=Products[0],Category=Categories[1]},
