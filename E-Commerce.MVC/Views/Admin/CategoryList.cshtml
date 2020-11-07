@@ -1,0 +1,40 @@
+@model CategoryListViewModel
+
+<h1>Admin Categories</h1>
+<hr>
+<a class="btn btn-primary btn-sm mt-3 mb-3" href="/admin/categories/add">Add Category</a>
+@if (Model.Categories.Count() > 0)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>URL</td>
+                <td>İşlemler</td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.Categories)
+            {
+                <tr>
+                    <td>@item.CategoryId</td>
+                    <td>@item.Name</td>
+                    <td>@item.Url</td>
+                    <td>
+                        <a href="/admin/categories/@item.CategoryId" class="btn btn-primary btn-sm mr-2">Edit</a>
+                        <form action="/admin/deletecategory" style="display: inline;">
+                            <input name="CategoryId" type="hidden" value="@item.CategoryId" />
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">Ürün Bulunamadı derim.</div>
+}

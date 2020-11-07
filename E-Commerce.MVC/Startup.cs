@@ -82,16 +82,42 @@ namespace E_Commerce.MVC
                 app.UseEndpoints(endpoints =>
                 {
                     // Admin Pages
+
+                    /*Products*/
                     endpoints.MapControllerRoute(
-                       name: "adminproductlist",
+                       name: "adminproducts",
                        pattern: "admin/products",
                        defaults: new { controller = "Admin", Action = "ProductList" }
                    );
                     endpoints.MapControllerRoute(
-                        name: "adminproductlist",
-                        pattern: "admin/products/{id?}",
-                        defaults: new { controller = "Admin", Action = "Edit" }
+                       name: "adminproductadd",
+                       pattern: "admin/products/add",
+                       defaults: new { controller = "Admin", Action = "AddProduct" }
+                   );
+                    endpoints.MapControllerRoute(
+                         name: "adminproductedit",
+                         pattern: "admin/products/{id?}",
+                         defaults: new { controller = "Admin", Action = "EditProduct" }
+                     );
+
+
+                    /*Categories*/
+                    endpoints.MapControllerRoute(
+                        name: "admincategories",
+                        pattern: "admin/categories",
+                        defaults: new { controller = "Admin", Action = "CategoryList" }
                     );
+                    endpoints.MapControllerRoute(
+                       name: "admincategoryadd",
+                       pattern: "admin/categories/add",
+                       defaults: new { controller = "Admin", Action = "AddCategory" }
+                   );
+                    endpoints.MapControllerRoute(
+                          name: "admincategoryedit",
+                          pattern: "admin/categories/{id?}",
+                          defaults: new { controller = "Admin", Action = "EditCategory" }
+                      );
+
 
                     // User Pages
                     endpoints.MapControllerRoute(

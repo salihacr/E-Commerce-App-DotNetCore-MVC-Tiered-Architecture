@@ -13,9 +13,11 @@ namespace E_Commerce.MVC.Controllers
     public class AdminController : Controller
     {
         private IProductService _productService;
-        public AdminController(IProductService productService)
+        private ICategoryService _categoryService;
+        public AdminController(IProductService productService, ICategoryService categoryService)
         {
             _productService = productService;
+            _categoryService = categoryService;
         }
 
         public IActionResult ProductList()
@@ -55,7 +57,7 @@ namespace E_Commerce.MVC.Controllers
         }
         // güncelleme sayfasını getirir
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public IActionResult EditProduct(int? id)
         {
             if (id == null)
             {
@@ -78,7 +80,7 @@ namespace E_Commerce.MVC.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult Edit(ProductModel model)
+        public IActionResult EditProduct(ProductModel model)
         {
             var product = _productService.GetById(model.ProductId);
             if (product == null)
@@ -125,5 +127,101 @@ namespace E_Commerce.MVC.Controllers
             TempData["message"] = JsonConvert.SerializeObject(msg);
             return RedirectToAction("ProductList");
         }
+
+
+        /*
+        
+            Kategoriler => Kategori controllera taşınacak
+        */
+        public IActionResult CategoryList()
+        {
+            return View(new CategoryListViewModel()
+            {
+                Categories = _categoryService.GetAll()
+            });
+        }
+        // ekleme sayfasını getirir
+        [HttpGet]
+        public IActionResult AddCategory()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddCategory(CategoryModel model)
+        {
+            var entity = new Category()
+            {
+                Name = model.Name,
+                Url = model.Url
+            };
+            _categoryService.Add(entity);
+
+            var msg = new AlertMessage()
+            {
+                Message = $"{entity.Name} adlı kategori eklendi.",
+                AlertType = "success"
+            };
+            TempData["message"] = JsonConvert.SerializeObject(msg);
+            return RedirectToAction("CategoryList");
+        }
+        // güncelleme sayfasını getirir
+        [HttpGet]
+        public IActionResult EditCategory(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var entity = _categoryService.GetById((int)id);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+            var model = new CategoryModel()
+            {
+                CategoryId = entity.CategoryId,
+                Name = entity.Name,
+                Url = entity.Url
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult EditCategory(CategoryModel model)
+        {
+            var category = _categoryService.GetById(model.CategoryId);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            category.Name = model.Name;
+            category.Url = model.Url;
+
+
+            _categoryService.Update(category);
+            var msg = new AlertMessage()
+            {
+                Message = $"{category.Name} adlı kategori güncellendi.",
+                AlertType = "success"
+            };
+            TempData["message"] = JsonConvert.SerializeObject(msg);
+
+            return RedirectToAction("CategoryList");
+        }
+        public IActionResult DeleteCategory(int categoryId)
+        {
+            var entity = _categoryService.GetById(categoryId);
+            if (entity != null)
+            {
+                _categoryService.Delete(entity);
+            }
+            var msg = new AlertMessage()
+            {
+                Message = $"{entity.Name} adlı kategori silindi.",
+                AlertType = "danger"
+            };
+            TempData["message"] = JsonConvert.SerializeObject(msg);
+            return RedirectToAction("CategoryList");
+        }
+
     }
 }
