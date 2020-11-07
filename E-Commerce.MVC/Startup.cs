@@ -81,6 +81,19 @@ namespace E_Commerce.MVC
                 });*/
                 app.UseEndpoints(endpoints =>
                 {
+                    // Admin Pages
+                    endpoints.MapControllerRoute(
+                       name: "adminproductlist",
+                       pattern: "admin/products",
+                       defaults: new { controller = "Admin", Action = "ProductList" }
+                   );
+                    endpoints.MapControllerRoute(
+                        name: "adminproductlist",
+                        pattern: "admin/products/{id?}",
+                        defaults: new { controller = "Admin", Action = "Edit" }
+                    );
+
+                    // User Pages
                     endpoints.MapControllerRoute(
                        name: "search",
                        pattern: "search",

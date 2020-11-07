@@ -1,6 +1,5 @@
 using E_Commerce.Business.Abstract;
 using E_Commerce.Entities.Concrete;
-using E_Commerce.MVC.ViewModels;
 using E_Commerce.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
