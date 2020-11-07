@@ -34,6 +34,11 @@ namespace E_Commerce.Business.Concrete
             return _productRepository.GetById(id);
         }
 
+        public Product GetByIdWithCategories(int id)
+        {
+            return _productRepository.GetByIdWithCategories(id);
+        }
+
         public int GetCountByCategory(string category)
         {
             return _productRepository.GetCountByCategory(category);
@@ -62,6 +67,11 @@ namespace E_Commerce.Business.Concrete
         public void Update(Product entity)
         {
             _productRepository.Update(entity);
+        }
+
+        public void Update(Product product, int[] categoryIds)
+        {
+            _productRepository.Update(product, categoryIds);
         }
     }
 }

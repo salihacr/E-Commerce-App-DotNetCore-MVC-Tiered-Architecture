@@ -8,6 +8,18 @@ namespace E_Commerce.DataAccess.Concrete.EntityFrameworkCoreSqlServer
 {
     public class ProductRepository : EFCoreGenericRepository<Product, AvocodeContext>, IProductRepository
     {
+        public Product GetByIdWithCategories(int id)
+        {
+            using (var context = new AvocodeContext())
+            {
+                return context.Products
+                .Where(i => i.ProductId == id)
+                .Include(i => i.ProductCategories)
+                .ThenInclude(i => i.Category)
+                .FirstOrDefault();
+            }
+        }
+
         public int GetCountByCategory(string category)
         {
             using (var context = new AvocodeContext())
@@ -77,6 +89,31 @@ namespace E_Commerce.DataAccess.Concrete.EntityFrameworkCoreSqlServer
 
                 return products.ToList();
             }
+        }
+
+        public void Update(Product entity, int[] categoryIds)
+        {
+            using (var context = new AvocodeContext())
+            {
+                var product = context.Products
+                .Include(i => i.ProductCategories)
+                .FirstOrDefault(i => i.ProductId == entity.ProductId);
+                if (product != null)
+                {
+                    product.Name = entity.Name;
+                    product.Price = entity.Price;
+                    product.Description = entity.Description;
+                    product.Url = entity.Url;
+                    product.ImageUrl = entity.ImageUrl;
+                    product.ProductCategories = categoryIds.Select(catid => new ProductCategory()
+                    {
+                        ProductId = entity.ProductId,
+                        CategoryId = catid
+                    }).ToList();
+                }
+                context.SaveChanges();
+            }
+
         }
     }
 }

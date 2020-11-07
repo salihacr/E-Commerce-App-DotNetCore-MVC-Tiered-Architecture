@@ -63,7 +63,7 @@ namespace E_Commerce.MVC.Controllers
             {
                 return NotFound();
             }
-            var entity = _productService.GetById((int)id);
+            var entity = _productService.GetByIdWithCategories((int)id);
             if (entity == null)
             {
                 return NotFound();
@@ -75,12 +75,14 @@ namespace E_Commerce.MVC.Controllers
                 Url = entity.Url,
                 Price = entity.Price,
                 Description = entity.Description,
-                ImageUrl = entity.ImageUrl
+                ImageUrl = entity.ImageUrl,
+                SelectedCategories = entity.ProductCategories.Select(p => p.Category).ToList()
             };
+            ViewBag.Categories = _categoryService.GetAll();
             return View(model);
         }
         [HttpPost]
-        public IActionResult EditProduct(ProductModel model)
+        public IActionResult EditProduct(ProductModel model, int[] categoryIds)
         {
             var product = _productService.GetById(model.ProductId);
             if (product == null)
@@ -102,7 +104,7 @@ namespace E_Commerce.MVC.Controllers
             product.ImageUrl = model.ImageUrl;
             product.Description = model.Description;
 
-            _productService.Update(product);
+            _productService.Update(product, categoryIds);
             var msg = new AlertMessage()
             {
                 Message = $"{product.Name} adlı ürün güncellendi.",
@@ -172,7 +174,7 @@ namespace E_Commerce.MVC.Controllers
             {
                 return NotFound();
             }
-            var entity = _categoryService.GetById((int)id);
+            var entity = _categoryService.GetByIdWithProducts((int)id);
             if (entity == null)
             {
                 return NotFound();
@@ -181,14 +183,15 @@ namespace E_Commerce.MVC.Controllers
             {
                 CategoryId = entity.CategoryId,
                 Name = entity.Name,
-                Url = entity.Url
+                Url = entity.Url,
+                Products = entity.ProductCategories.Select(p => p.Product).ToList()
             };
             return View(model);
         }
         [HttpPost]
         public IActionResult EditCategory(CategoryModel model)
         {
-            var category = _categoryService.GetById(model.CategoryId);
+            var category = _categoryService.GetByIdWithProducts(model.CategoryId);
             if (category == null)
             {
                 return NotFound();
@@ -221,6 +224,12 @@ namespace E_Commerce.MVC.Controllers
             };
             TempData["message"] = JsonConvert.SerializeObject(msg);
             return RedirectToAction("CategoryList");
+        }
+        [HttpPost]
+        public IActionResult DeleteFromCategory(int productId, int categoryId)
+        {
+            _categoryService.DeleteFromCategory(productId, categoryId);
+            return Redirect("/admin/categories/" + categoryId);
         }
 
     }

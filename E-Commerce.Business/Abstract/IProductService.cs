@@ -16,5 +16,7 @@ namespace E_Commerce.Business.Abstract
         void Add(Product entity);
         void Update(Product entity);
         void Delete(Product entity);
+        Product GetByIdWithCategories(int id);
+        void Update(Product product, int[] categoryIds);
     }
 }

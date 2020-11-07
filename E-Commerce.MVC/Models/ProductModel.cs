@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using E_Commerce.Entities.Concrete;
+
 namespace E_Commerce.MVC.Models
 {
     public class ProductModel
@@ -10,5 +13,6 @@ namespace E_Commerce.MVC.Models
         public string ImageUrl { get; set; }
         public bool IsApproved { get; set; }
         public bool IsHome { get; set; }
+        public List<Category> SelectedCategories { get; set; }
     }
 }
