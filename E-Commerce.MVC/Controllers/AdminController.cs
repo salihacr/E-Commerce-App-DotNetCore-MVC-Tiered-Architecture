@@ -37,23 +37,27 @@ namespace E_Commerce.MVC.Controllers
         [HttpPost]
         public IActionResult AddProduct(ProductModel model)
         {
-            var entity = new Product()
+            if (ModelState.IsValid)
             {
-                Name = model.Name,
-                Url = model.Url,
-                Price = model.Price,
-                Description = model.Description,
-                ImageUrl = model.ImageUrl
-            };
-            _productService.Add(entity);
+                var entity = new Product()
+                {
+                    Name = model.Name,
+                    Url = model.Url,
+                    Price = model.Price,
+                    Description = model.Description,
+                    ImageUrl = model.ImageUrl
+                };
+                _productService.Add(entity);
 
-            var msg = new AlertMessage()
-            {
-                Message = $"{entity.Name} adlı ürün eklendi.",
-                AlertType = "success"
-            };
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-            return RedirectToAction("ProductList");
+                var msg = new AlertMessage()
+                {
+                    Message = $"{entity.Name} adlı ürün eklendi.",
+                    AlertType = "success"
+                };
+                TempData["message"] = JsonConvert.SerializeObject(msg);
+                return RedirectToAction("ProductList");
+            }
+            return View(model);
         }
         // güncelleme sayfasını getirir
         [HttpGet]
@@ -84,35 +88,31 @@ namespace E_Commerce.MVC.Controllers
         [HttpPost]
         public IActionResult EditProduct(ProductModel model, int[] categoryIds)
         {
-            var product = _productService.GetById(model.ProductId);
-            if (product == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
-            }/*
-            var entity = new Product()
-            {
-                Name = model.Name,
-                Url = model.Url,
-                Price = model.Price,
-                Description = model.Description,
-                ImageUrl = model.ImageUrl
-            };
-            */
-            product.Name = model.Name;
-            product.Price = model.Price;
-            product.Url = model.Url;
-            product.ImageUrl = model.ImageUrl;
-            product.Description = model.Description;
+                var entity = _productService.GetById(model.ProductId);
+                if (entity == null)
+                {
+                    return NotFound();
+                }
+                entity.Name = model.Name;
+                entity.Price = model.Price;
+                entity.Url = model.Url;
+                entity.ImageUrl = model.ImageUrl;
+                entity.Description = model.Description;
 
-            _productService.Update(product, categoryIds);
-            var msg = new AlertMessage()
-            {
-                Message = $"{product.Name} adlı ürün güncellendi.",
-                AlertType = "success"
-            };
-            TempData["message"] = JsonConvert.SerializeObject(msg);
+                _productService.Update(entity, categoryIds);
+                var msg = new AlertMessage()
+                {
+                    Message = $"{entity.Name} adlı ürün güncellendi.",
+                    AlertType = "success"
+                };
+                TempData["message"] = JsonConvert.SerializeObject(msg);
 
-            return RedirectToAction("ProductList");
+                return RedirectToAction("ProductList");
+            }
+            ViewBag.Categories = _categoryService.GetAll();
+            return View(model);
         }
         public IActionResult DeleteProduct(int productId)
         {
@@ -151,20 +151,24 @@ namespace E_Commerce.MVC.Controllers
         [HttpPost]
         public IActionResult AddCategory(CategoryModel model)
         {
-            var entity = new Category()
+            if (ModelState.IsValid)
             {
-                Name = model.Name,
-                Url = model.Url
-            };
-            _categoryService.Add(entity);
+                var entity = new Category()
+                {
+                    Name = model.Name,
+                    Url = model.Url
+                };
+                _categoryService.Add(entity);
 
-            var msg = new AlertMessage()
-            {
-                Message = $"{entity.Name} adlı kategori eklendi.",
-                AlertType = "success"
-            };
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-            return RedirectToAction("CategoryList");
+                var msg = new AlertMessage()
+                {
+                    Message = $"{entity.Name} adlı kategori eklendi.",
+                    AlertType = "success"
+                };
+                TempData["message"] = JsonConvert.SerializeObject(msg);
+                return RedirectToAction("CategoryList");
+            }
+            return View(model);
         }
         // güncelleme sayfasını getirir
         [HttpGet]
@@ -191,24 +195,27 @@ namespace E_Commerce.MVC.Controllers
         [HttpPost]
         public IActionResult EditCategory(CategoryModel model)
         {
-            var category = _categoryService.GetByIdWithProducts(model.CategoryId);
-            if (category == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                var entity = _categoryService.GetByIdWithProducts(model.CategoryId);
+                if (entity == null)
+                {
+                    return NotFound();
+                }
+                entity.Name = model.Name;
+                entity.Url = model.Url;
+
+                _categoryService.Update(entity);
+                var msg = new AlertMessage()
+                {
+                    Message = $"{entity.Name} adlı kategori güncellendi.",
+                    AlertType = "success"
+                };
+                TempData["message"] = JsonConvert.SerializeObject(msg);
+
+                return RedirectToAction("CategoryList");
             }
-            category.Name = model.Name;
-            category.Url = model.Url;
-
-
-            _categoryService.Update(category);
-            var msg = new AlertMessage()
-            {
-                Message = $"{category.Name} adlı kategori güncellendi.",
-                AlertType = "success"
-            };
-            TempData["message"] = JsonConvert.SerializeObject(msg);
-
-            return RedirectToAction("CategoryList");
+            return View(model);
         }
         public IActionResult DeleteCategory(int categoryId)
         {
