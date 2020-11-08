@@ -22,7 +22,7 @@ namespace E_Commerce.MVC.Models
         [Required(ErrorMessage = "Açıklama zorunlu bir alandır.")]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Ürün resmi zorunlu bir alandır.")]
+        // [Required(ErrorMessage = "Ürün resmi zorunlu bir alandır.")]
         public string ImageUrl { get; set; }
 
         public bool IsApproved { get; set; }

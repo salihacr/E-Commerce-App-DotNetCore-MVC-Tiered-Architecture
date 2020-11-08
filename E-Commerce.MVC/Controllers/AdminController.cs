@@ -7,6 +7,8 @@ using E_Commerce.MVC.Models;
 using E_Commerce.Business.Abstract;
 using E_Commerce.Entities.Concrete;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace E_Commerce.MVC.Controllers
 {
@@ -45,7 +47,7 @@ namespace E_Commerce.MVC.Controllers
                     Url = model.Url,
                     Price = model.Price,
                     Description = model.Description,
-                    ImageUrl = model.ImageUrl
+                    ImageUrl = null
                 };
                 _productService.Add(entity);
 
@@ -88,7 +90,7 @@ namespace E_Commerce.MVC.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult EditProduct(ProductModel model, int[] categoryIds)
+        public async Task<IActionResult> EditProduct(ProductModel model, int[] categoryIds, IFormFile file)
         {
             if (ModelState.IsValid)
             {
@@ -100,11 +102,30 @@ namespace E_Commerce.MVC.Controllers
                 entity.Name = model.Name;
                 entity.Price = model.Price;
                 entity.Url = model.Url;
-                entity.ImageUrl = model.ImageUrl;
+                //entity.ImageUrl = model.ImageUrl;
                 entity.Description = model.Description;
                 entity.IsApproved = model.IsApproved;
                 entity.IsHome = model.IsHome;
+                if (file != null)
+                {
+                    // if ((file.ContentType.ToLower() == "png") || (file.ContentType.ToLower() == "jpg") || (file.ContentType.ToLower() == "jpeg"))
+                    // {
+                    //     if (file.Length < 1500000)
+                    //     {
+                    entity.ImageUrl = file.FileName;
+                    var extention = Path.GetExtension(file.FileName);
+                    var randomName = string.Format($"{Guid.NewGuid()}{extention}");
+                    entity.ImageUrl = randomName;
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img", randomName);
 
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                    //     }
+                    // }
+
+                }
                 if (_productService.Update(entity, categoryIds))
                 {
                     var msg2 = new AlertMessage()

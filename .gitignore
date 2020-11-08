@@ -366,3 +366,5 @@ FodyWeavers.xsd
 
 # Output folder used by Webpack or other FE stuff
 **/node_modules/*
+
+img
