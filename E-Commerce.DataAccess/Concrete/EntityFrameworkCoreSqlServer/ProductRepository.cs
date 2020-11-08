@@ -105,6 +105,8 @@ namespace E_Commerce.DataAccess.Concrete.EntityFrameworkCoreSqlServer
                     product.Description = entity.Description;
                     product.Url = entity.Url;
                     product.ImageUrl = entity.ImageUrl;
+                    product.IsHome = entity.IsHome;
+                    product.IsApproved = entity.IsApproved;
                     product.ProductCategories = categoryIds.Select(catid => new ProductCategory()
                     {
                         ProductId = entity.ProductId,

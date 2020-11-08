@@ -80,6 +80,8 @@ namespace E_Commerce.MVC.Controllers
                 Price = entity.Price,
                 Description = entity.Description,
                 ImageUrl = entity.ImageUrl,
+                IsApproved = entity.IsApproved,
+                IsHome = entity.IsHome,
                 SelectedCategories = entity.ProductCategories.Select(p => p.Category).ToList()
             };
             ViewBag.Categories = _categoryService.GetAll();
@@ -100,16 +102,25 @@ namespace E_Commerce.MVC.Controllers
                 entity.Url = model.Url;
                 entity.ImageUrl = model.ImageUrl;
                 entity.Description = model.Description;
+                entity.IsApproved = model.IsApproved;
+                entity.IsHome = model.IsHome;
 
-                _productService.Update(entity, categoryIds);
+                if (_productService.Update(entity, categoryIds))
+                {
+                    var msg2 = new AlertMessage()
+                    {
+                        Message = $"{entity.Name} adlı ürün güncellendi.",
+                        AlertType = "success"
+                    };
+                    TempData["message"] = JsonConvert.SerializeObject(msg2);
+                    return RedirectToAction("ProductList");
+                }
                 var msg = new AlertMessage()
                 {
-                    Message = $"{entity.Name} adlı ürün güncellendi.",
-                    AlertType = "success"
+                    Message = $"{_productService.ErrorMessage}",
+                    AlertType = "danger"
                 };
                 TempData["message"] = JsonConvert.SerializeObject(msg);
-
-                return RedirectToAction("ProductList");
             }
             ViewBag.Categories = _categoryService.GetAll();
             return View(model);

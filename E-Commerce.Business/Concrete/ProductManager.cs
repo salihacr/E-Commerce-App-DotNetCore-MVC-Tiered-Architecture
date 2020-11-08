@@ -69,9 +69,40 @@ namespace E_Commerce.Business.Concrete
             _productRepository.Update(entity);
         }
 
-        public void Update(Product product, int[] categoryIds)
+        public bool Update(Product entity, int[] categoryIds)
         {
-            _productRepository.Update(product, categoryIds);
+
+            if (Validation(entity))
+            {
+                if (categoryIds.Length == 0)
+                {
+                    ErrorMessage += "Ürün için en az bir kategori seçmelisiniz.";
+                    return false;
+                }
+                _productRepository.Update(entity, categoryIds);
+                return true;
+            }
+            return false;
+        }
+        public string ErrorMessage { get; set; }
+
+        public bool Validation(Product entity)
+        {
+            var isValid = true;
+
+            if (string.IsNullOrEmpty(entity.Name))
+            {
+                ErrorMessage += "ürün ismi girmelisiniz.\n";
+                isValid = false;
+            }
+
+            if (entity.Price < 0)
+            {
+                ErrorMessage += "ürün fiyatı negatif olamaz.\n";
+                isValid = false;
+            }
+
+            return isValid;
         }
     }
 }

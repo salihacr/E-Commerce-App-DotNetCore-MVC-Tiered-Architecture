@@ -2,7 +2,7 @@
 
 <h1 class="h3">Edit Product</h1>
 <hr>
-<form asp-controller="Admin" asp-action="EditProduct" method="POST">
+<form asp-controller="Admin" asp-action="EditProduct" method="POST" enctype="multipart/form-data">
     <div class="col-md-8">
         <input type="hidden" name="ProductId" value="@Model.ProductId" />
         <div class="form-group row">
@@ -63,6 +63,15 @@
                 <label class="custom-control-label" for="category_@(item.CategoryId)">@item.Name</label>
             </div>
         }
+        <hr>
+        <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" asp-for="IsApproved">
+                <label asp-for="IsApproved" class="custom-control-label">Ürün Hazır mı? </label>
+        </div>
+        <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" asp-for="IsHome">
+                <label asp-for="IsHome" class="custom-control-label">Anasayfada Gözüksün mü?</label>
+        </div>
     </div>
 </form>
 @section Scripts{

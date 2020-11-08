@@ -3,7 +3,7 @@ using E_Commerce.Entities.Concrete;
 
 namespace E_Commerce.Business.Abstract
 {
-    public interface IProductService
+    public interface IProductService : IValidator<Product>
     {
         List<Product> GetProductsByCategory(string name, int page, int pageSize);
         Product GetProductDetails(string url);
@@ -17,6 +17,6 @@ namespace E_Commerce.Business.Abstract
         void Update(Product entity);
         void Delete(Product entity);
         Product GetByIdWithCategories(int id);
-        void Update(Product product, int[] categoryIds);
+        bool Update(Product entity, int[] categoryIds);
     }
 }
