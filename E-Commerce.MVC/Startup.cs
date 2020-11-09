@@ -56,7 +56,7 @@ namespace E_Commerce.MVC
 
                 //options.User.AllowedUserNameCharacters = "";
                 options.User.RequireUniqueEmail = true;
-                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedEmail = true;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
             });
             services.ConfigureApplicationCookie(options =>
@@ -69,7 +69,8 @@ namespace E_Commerce.MVC
                 options.Cookie = new CookieBuilder
                 {
                     HttpOnly = true,
-                    Name = ".E_Commerce.Security.Cookie"
+                    Name = ".E_Commerce.Security.Cookie",
+                    SameSite = SameSiteMode.Strict
                 };
             });
 
