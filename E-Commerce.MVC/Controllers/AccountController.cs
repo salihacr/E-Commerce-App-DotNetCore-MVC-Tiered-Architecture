@@ -7,6 +7,7 @@ using E_Commerce.MVC.Models;
 using Microsoft.AspNetCore.Identity;
 using E_Commerce.MVC.Identity;
 using Newtonsoft.Json;
+using E_Commerce.MVC.EmailServices;
 
 namespace E_Commerce.MVC.Controllers
 {
@@ -15,10 +16,12 @@ namespace E_Commerce.MVC.Controllers
     {
         private UserManager<User> _userManager;
         private SignInManager<User> _signManager;
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private IEmailSender _emailSender;
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender)
         {
             _userManager = userManager;
             _signManager = signInManager;
+            _emailSender = emailSender;
         }
         [HttpGet]
         public IActionResult Login(string ReturnUrl = null)
@@ -89,7 +92,9 @@ namespace E_Commerce.MVC.Controllers
                 });
                 Console.Write(url);
                 // email
-
+                var siteUrl = "https://localhost:5001";
+                var html = $"lütfen email hesabınızı onaylamak için <a href='{siteUrl + url}'>linke</a> tıklayınız.";
+                await _emailSender.SendEmailAsync(model.Email, "hesabınızı onaylayınız.", html);
 
                 return RedirectToAction("Login", "Account");
             }

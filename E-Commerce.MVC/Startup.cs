@@ -7,6 +7,7 @@ using E_Commerce.Business.Abstract;
 using E_Commerce.Business.Concrete;
 using E_Commerce.DataAccess.Abstract;
 using E_Commerce.DataAccess.Concrete.EntityFrameworkCoreSqlServer;
+using E_Commerce.MVC.EmailServices;
 using E_Commerce.MVC.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -85,6 +86,17 @@ namespace E_Commerce.MVC
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<IOrderService, OrderManager>();
             services.AddScoped<ICartService, CartManager>();
+
+            // email sender dependency injection
+            services.AddScoped<IEmailSender, SmtpEmailSender>(i =>
+            new SmtpEmailSender(
+                _configuration["EmailSender:Host"],
+                _configuration.GetValue<int>("EmailSender:Port"),
+                _configuration.GetValue<bool>("EmailSender:EnableSSL"),
+                _configuration["EmailSender:UserName"],
+                _configuration["EmailSender:Password"]
+                )
+            );
 
 
             // MVC
