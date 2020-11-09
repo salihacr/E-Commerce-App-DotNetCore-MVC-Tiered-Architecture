@@ -126,6 +126,9 @@ namespace E_Commerce.MVC
 
             app.UseAuthentication();
 
+            app.UseHsts();
+            app.UseHttpsRedirection();
+
             app.UseRouting();
             app.UseAuthorization();
 
