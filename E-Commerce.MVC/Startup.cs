@@ -56,13 +56,13 @@ namespace E_Commerce.MVC
 
                 //options.User.AllowedUserNameCharacters = "";
                 options.User.RequireUniqueEmail = true;
-                options.SignIn.RequireConfirmedEmail = true;
-                options.SignIn.RequireConfirmedPhoneNumber = true;
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
             });
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/account/login";
-                options.LogoutPath = "account/logout";
+                options.LogoutPath = "/account/logout";
                 options.AccessDeniedPath = "/account/accessdenied";
                 options.SlidingExpiration = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
@@ -114,6 +114,7 @@ namespace E_Commerce.MVC
             app.UseAuthentication();
 
             app.UseRouting();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

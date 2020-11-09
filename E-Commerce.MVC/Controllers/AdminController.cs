@@ -9,9 +9,11 @@ using E_Commerce.Entities.Concrete;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_Commerce.MVC.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private IProductService _productService;
