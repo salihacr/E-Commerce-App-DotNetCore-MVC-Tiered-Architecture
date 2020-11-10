@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
+using E_Commerce.MVC.Extensions;
 
 namespace E_Commerce.MVC.Controllers
 {
@@ -53,12 +54,8 @@ namespace E_Commerce.MVC.Controllers
                 };
                 _productService.Add(entity);
 
-                var msg = new AlertMessage()
-                {
-                    Message = $"{entity.Name} adlı ürün eklendi.",
-                    AlertType = "success"
-                };
-                TempData["message"] = JsonConvert.SerializeObject(msg);
+                CreateMessage("Ekleme", $"{entity.Name} adlı ürün eklendi.", "success");
+
                 return RedirectToAction("ProductList");
             }
             return View(model);
@@ -130,20 +127,11 @@ namespace E_Commerce.MVC.Controllers
                 }
                 if (_productService.Update(entity, categoryIds))
                 {
-                    var msg2 = new AlertMessage()
-                    {
-                        Message = $"{entity.Name} adlı ürün güncellendi.",
-                        AlertType = "success"
-                    };
-                    TempData["message"] = JsonConvert.SerializeObject(msg2);
+                    CreateMessage("Güncelleme", $"{entity.Name} adlı ürün güncellendi.", "success");
                     return RedirectToAction("ProductList");
                 }
-                var msg = new AlertMessage()
-                {
-                    Message = $"{_productService.ErrorMessage}",
-                    AlertType = "danger"
-                };
-                TempData["message"] = JsonConvert.SerializeObject(msg);
+
+                CreateMessage("Hata", $"{_productService.ErrorMessage}", "danger");
             }
             ViewBag.Categories = _categoryService.GetAll();
             return View(model);
@@ -155,12 +143,7 @@ namespace E_Commerce.MVC.Controllers
             {
                 _productService.Delete(entity);
             }
-            var msg = new AlertMessage()
-            {
-                Message = $"{entity.Name} adlı ürün silindi.",
-                AlertType = "danger"
-            };
-            TempData["message"] = JsonConvert.SerializeObject(msg);
+            CreateMessage("Silme", $"{entity.Name} adlı ürün silindi.", "danger");
             return RedirectToAction("ProductList");
         }
 
@@ -194,12 +177,7 @@ namespace E_Commerce.MVC.Controllers
                 };
                 _categoryService.Add(entity);
 
-                var msg = new AlertMessage()
-                {
-                    Message = $"{entity.Name} adlı kategori eklendi.",
-                    AlertType = "success"
-                };
-                TempData["message"] = JsonConvert.SerializeObject(msg);
+                CreateMessage("Ekleme", $"{entity.Name} adlı kategori eklendi.", "success");
                 return RedirectToAction("CategoryList");
             }
             return View(model);
@@ -240,13 +218,9 @@ namespace E_Commerce.MVC.Controllers
                 entity.Url = model.Url;
 
                 _categoryService.Update(entity);
-                var msg = new AlertMessage()
-                {
-                    Message = $"{entity.Name} adlı kategori güncellendi.",
-                    AlertType = "success"
-                };
-                TempData["message"] = JsonConvert.SerializeObject(msg);
 
+
+                CreateMessage("Güncelleme", $"{entity.Name} adlı kategori güncellendi.", "success");
                 return RedirectToAction("CategoryList");
             }
             return View(model);
@@ -258,12 +232,7 @@ namespace E_Commerce.MVC.Controllers
             {
                 _categoryService.Delete(entity);
             }
-            var msg = new AlertMessage()
-            {
-                Message = $"{entity.Name} adlı kategori silindi.",
-                AlertType = "danger"
-            };
-            TempData["message"] = JsonConvert.SerializeObject(msg);
+            CreateMessage("Silme", $"{entity.Name} adlı kategori silindi.", "danger");
             return RedirectToAction("CategoryList");
         }
         [HttpPost]
@@ -271,6 +240,15 @@ namespace E_Commerce.MVC.Controllers
         {
             _categoryService.DeleteFromCategory(productId, categoryId);
             return Redirect("/admin/categories/" + categoryId);
+        }
+        public void CreateMessage(string title, string message, string alerttype)
+        {
+            TempData.Put("message", new AlertMessage()
+            {
+                Title = title,
+                Message = message,
+                AlertType = alerttype
+            });
         }
 
     }

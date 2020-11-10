@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using E_Commerce.MVC.Identity;
 using Newtonsoft.Json;
 using E_Commerce.MVC.EmailServices;
+using E_Commerce.MVC.Extensions;
 
 namespace E_Commerce.MVC.Controllers
 {
@@ -110,7 +111,7 @@ namespace E_Commerce.MVC.Controllers
         {
             if (userId == null || token == null)
             {
-                CreateMessage("geçersiz token", "danger");
+                CreateMessage("geçersiz token", "geçersiz token", "danger");
                 return View();
             }
             var user = await _userManager.FindByIdAsync(userId);
@@ -119,11 +120,11 @@ namespace E_Commerce.MVC.Controllers
                 var result = await _userManager.ConfirmEmailAsync(user, token);
                 if (result.Succeeded)
                 {
-                    CreateMessage("hesabınız onaylandı.", "success");
+                    CreateMessage("hesabınız onaylandı", "hesabınız onaylandı.", "success");
                     return View();
                 }
             }
-            CreateMessage("böyle biri yok", "warning");
+            CreateMessage("böyle biri yok", "böyle biri yok", "warning");
             return View();
         }
         public IActionResult ForgotPassword()
@@ -185,14 +186,14 @@ namespace E_Commerce.MVC.Controllers
             }
             return View(model);
         }
-        public void CreateMessage(string message, string alerttype)
+        public void CreateMessage(string title, string message, string alerttype)
         {
-            var msg = new AlertMessage()
+            TempData.Put("message", new AlertMessage()
             {
+                Title = title,
                 Message = message,
                 AlertType = alerttype
-            };
-            TempData["message"] = JsonConvert.SerializeObject(msg);
+            });
         }
     }
 }
