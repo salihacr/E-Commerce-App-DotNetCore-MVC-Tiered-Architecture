@@ -9,9 +9,11 @@ using E_Commerce.MVC.Identity;
 using Newtonsoft.Json;
 using E_Commerce.MVC.EmailServices;
 using E_Commerce.MVC.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_Commerce.MVC.Controllers
 {
+    [Authorize]
     [AutoValidateAntiforgeryToken]
     public class AccountController : Controller
     {
@@ -24,7 +26,7 @@ namespace E_Commerce.MVC.Controllers
             _signManager = signInManager;
             _emailSender = emailSender;
         }
-        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login(string ReturnUrl = null)
         {
             return View(new LoginModel()
@@ -61,7 +63,7 @@ namespace E_Commerce.MVC.Controllers
             ModelState.AddModelError("", "Kullanıcı adı veya parola yanlış.");
             return View(model);
         }
-        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
@@ -107,6 +109,7 @@ namespace E_Commerce.MVC.Controllers
             await _signManager.SignOutAsync();
             return Redirect("~/");
         }
+        [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
             if (userId == null || token == null)
@@ -127,10 +130,12 @@ namespace E_Commerce.MVC.Controllers
             CreateMessage("böyle biri yok", "böyle biri yok", "warning");
             return View();
         }
+        [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
             return View();
         }
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> ForgotPassword(string Email)
         {
@@ -158,6 +163,7 @@ namespace E_Commerce.MVC.Controllers
 
             return View();
         }
+        [AllowAnonymous]
         public IActionResult ResetPassword(string userId, string token)
         {
             if (userId == null || token == null)
@@ -167,6 +173,7 @@ namespace E_Commerce.MVC.Controllers
             var model = new ResetPasswordModel { Token = token };
             return View();
         }
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
         {
@@ -185,6 +192,10 @@ namespace E_Commerce.MVC.Controllers
                 return RedirectToAction("Login", "Account");
             }
             return View(model);
+        }
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
         public void CreateMessage(string title, string message, string alerttype)
         {

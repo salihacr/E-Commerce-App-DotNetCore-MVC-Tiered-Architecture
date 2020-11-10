@@ -16,7 +16,7 @@ using E_Commerce.MVC.Identity;
 
 namespace E_Commerce.MVC.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")] // metotların üstünede yazılabiliyor
     public class AdminController : Controller
     {
         private IProductService _productService;
