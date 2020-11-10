@@ -143,6 +143,25 @@ namespace E_Commerce.MVC
                 {
                     // Admin Pages
 
+
+                    /*Roles*/
+                    endpoints.MapControllerRoute(
+                       name: "adminroles",
+                       pattern: "admin/role/list",
+                       defaults: new { controller = "Admin", Action = "RoleList" }
+                   );
+                    endpoints.MapControllerRoute(
+                        name: "adminroleadd",
+                        pattern: "admin/role/add",
+                        defaults: new { controller = "Admin", Action = "AddRole" }
+                    );
+                    endpoints.MapControllerRoute(
+                        name: "adminroleedit",
+                        pattern: "admin/role/{id?}",
+                        defaults: new { controller = "Admin", Action = "EditRole" }
+                    );
+
+
                     /*Products*/
                     endpoints.MapControllerRoute(
                        name: "adminproducts",
