@@ -105,7 +105,7 @@ namespace E_Commerce.MVC
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IConfiguration configuration, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
 
             // Static Files MiddleWare
@@ -123,6 +123,9 @@ namespace E_Commerce.MVC
                 SeedDatabase.Seed();
                 app.UseDeveloperExceptionPage();
             }
+
+            // yayın aşamasında seed ekliyoruz
+
 
             app.UseAuthentication();
 
@@ -234,6 +237,7 @@ namespace E_Commerce.MVC
 
 
             });
+            SeedIdentity.Seed(userManager, roleManager, configuration).Wait();
         }
     }
 }

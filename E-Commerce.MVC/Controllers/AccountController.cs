@@ -83,6 +83,9 @@ namespace E_Commerce.MVC.Controllers
                 Email = model.Email
             };
             var result = await _userManager.CreateAsync(user, model.Password);
+            
+            // default user role added
+            await _userManager.AddToRoleAsync(user, "User");
             if (result.Succeeded)
             {
                 // generate token
