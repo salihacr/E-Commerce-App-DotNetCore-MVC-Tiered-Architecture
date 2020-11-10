@@ -126,6 +126,65 @@ namespace E_Commerce.MVC.Controllers
             CreateMessage("böyle biri yok", "warning");
             return View();
         }
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(string Email)
+        {
+            if (string.IsNullOrEmpty(Email))
+            {
+                return View();
+            }
+            var user = await _userManager.FindByEmailAsync(Email);
+            if (user == null)
+            {
+                return View();
+            }
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            // generate token
+            var url = Url.Action("ResetPassword", "Account", new
+            {
+                userId = user.Id,
+                token = token
+            });
+            Console.Write(url);
+            // email
+            var siteUrl = "https://localhost:5001";
+            var html = $"lütfen hesap şifrenizi değiştirmek için <a href='{siteUrl + url}'>linke</a> tıklayınız.";
+            await _emailSender.SendEmailAsync(Email, "Şifre Değiştirme.", html);
+
+            return View();
+        }
+        public IActionResult ResetPassword(string userId, string token)
+        {
+            if (userId == null || token == null)
+            {
+                return RedirectToAction("Home", "Index");
+            }
+            var model = new ResetPasswordModel { Token = token };
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                return RedirectToAction("Home", "Index");
+            }
+            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            return View(model);
+        }
         public void CreateMessage(string message, string alerttype)
         {
             var msg = new AlertMessage()
