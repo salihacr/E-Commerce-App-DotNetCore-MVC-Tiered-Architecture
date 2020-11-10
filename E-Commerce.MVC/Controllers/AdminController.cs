@@ -341,6 +341,15 @@ namespace E_Commerce.MVC.Controllers
             _categoryService.DeleteFromCategory(productId, categoryId);
             return Redirect("/admin/categories/" + categoryId);
         }
+
+        public IActionResult UserList()
+        {
+            return View(_userManager.Users);
+        }
+        public IActionResult EditUser()
+        {
+            return View();
+        }
         public void CreateMessage(string title, string message, string alerttype)
         {
             TempData.Put("message", new AlertMessage()

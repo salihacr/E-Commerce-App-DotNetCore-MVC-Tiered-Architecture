@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace E_Commerce.MVC.Controllers
 {
-    [Authorize]
     [AutoValidateAntiforgeryToken]
     public class AccountController : Controller
     {
