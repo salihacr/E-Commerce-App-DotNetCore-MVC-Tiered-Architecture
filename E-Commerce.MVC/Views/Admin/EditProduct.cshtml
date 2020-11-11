@@ -2,7 +2,9 @@
 
 <h1 class="h3">Edit Product</h1>
 <hr>
+
 <form asp-controller="Admin" asp-action="EditProduct" method="POST" enctype="multipart/form-data">
+   <div class="row">
     <div class="col-md-8">
         <input type="hidden" name="ProductId" value="@Model.ProductId" />
         <div class="form-group row">
@@ -75,7 +77,9 @@
                 <label asp-for="IsHome" class="custom-control-label">Anasayfada Gözüksün mü?</label>
         </div>
     </div>
+    </div>
 </form>
+
 @section Scripts{
     <script src="/modules/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="/modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
