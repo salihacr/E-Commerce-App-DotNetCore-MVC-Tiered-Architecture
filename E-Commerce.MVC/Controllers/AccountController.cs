@@ -125,6 +125,7 @@ namespace E_Commerce.MVC.Controllers
                 var result = await _userManager.ConfirmEmailAsync(user, token);
                 if (result.Succeeded)
                 {
+                    // cart objesini oluşturalım
                     CreateMessage("hesabınız onaylandı", "hesabınız onaylandı.", "success");
                     return View();
                 }
