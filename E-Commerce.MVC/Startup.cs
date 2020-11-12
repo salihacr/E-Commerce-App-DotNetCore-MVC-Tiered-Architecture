@@ -78,8 +78,8 @@ namespace E_Commerce.MVC
             // repositories for dependency injection data access
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
 
             // services for dependency injection business layer
             services.AddScoped<IProductService, ProductManager>();

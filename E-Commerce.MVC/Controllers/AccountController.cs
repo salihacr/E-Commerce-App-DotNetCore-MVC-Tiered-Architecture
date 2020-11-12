@@ -10,20 +10,27 @@ using Newtonsoft.Json;
 using E_Commerce.MVC.EmailServices;
 using E_Commerce.MVC.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using E_Commerce.Business.Abstract;
 
 namespace E_Commerce.MVC.Controllers
 {
     [AutoValidateAntiforgeryToken]
     public class AccountController : Controller
     {
+        private ICartService _cartService;
         private UserManager<User> _userManager;
         private SignInManager<User> _signManager;
         private IEmailSender _emailSender;
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender)
+        public AccountController(
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            IEmailSender emailSender,
+            ICartService cartService)
         {
             _userManager = userManager;
             _signManager = signInManager;
             _emailSender = emailSender;
+            _cartService = cartService;
         }
         [AllowAnonymous]
         public IActionResult Login(string ReturnUrl = null)
@@ -83,9 +90,9 @@ namespace E_Commerce.MVC.Controllers
                 Email = model.Email
             };
             var result = await _userManager.CreateAsync(user, model.Password);
-            
+
             // default user role added
-            await _userManager.AddToRoleAsync(user, "User");
+            //await _userManager.AddToRoleAsync(user, "User");
             if (result.Succeeded)
             {
                 // generate token
@@ -126,6 +133,7 @@ namespace E_Commerce.MVC.Controllers
                 if (result.Succeeded)
                 {
                     // cart objesini oluşturalım
+                    _cartService.InitializeCart(user.Id);
                     CreateMessage("hesabınız onaylandı", "hesabınız onaylandı.", "success");
                     return View();
                 }
