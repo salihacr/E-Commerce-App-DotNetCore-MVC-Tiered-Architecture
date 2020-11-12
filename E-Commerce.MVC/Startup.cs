@@ -144,6 +144,12 @@ namespace E_Commerce.MVC
                 });*/
                 app.UseEndpoints(endpoints =>
                 {
+                    /*Cart*/
+                    endpoints.MapControllerRoute(
+                       name: "cart",
+                       pattern: "cart",
+                       defaults: new { controller = "Cart", Action = "Index" }
+                   );
                     // Admin Pages
 
 
