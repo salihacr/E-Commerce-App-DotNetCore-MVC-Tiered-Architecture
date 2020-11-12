@@ -32,33 +32,25 @@ namespace E_Commerce.MVC.Controllers
                     Name = i.Product.Name,
                     Price = (double)i.Product.Price,
                     ImageUrl = i.Product.ImageUrl,
-                    Quantity = i.Quantity
+                    Quantity = i.Quantity,
+                    ProductId = i.ProductId
                 }).ToList()
             };
             return View(model);
         }
-        /*public IActionResult Index()
-        {
-            var cart = _cartService.GetCartByUserId(_userManager.GetUserId(User));
-            return View(new CartModel()
-            {
-                CartId = cart.Id,
-                CartItems = cart.CartItems.Select(i => new CartItemModel()
-                {
-                    CartItemId = i.Id,
-                    ProductId = i.ProductId,
-                    Name = i.Product.Name,
-                    Price = (double)i.Product.Price,
-                    ImageUrl = i.Product.ImageUrl,
-                    Quantity = i.Quantity
-
-                }).ToList()
-            });
-        }*/
         [HttpPost]
-        public IActionResult AddToCart()
+        public IActionResult AddToCart(int productId, int quantity)
         {
-            return View();
+            var userId = _userManager.GetUserId(User);
+            _cartService.AddToCart(userId, productId, quantity);
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public IActionResult DeleteFromCart(int productId)
+        {
+            var userId = _userManager.GetUserId(User);
+            _cartService.DeleteFromCart(userId, productId);
+            return RedirectToAction("Index");
         }
     }
 }

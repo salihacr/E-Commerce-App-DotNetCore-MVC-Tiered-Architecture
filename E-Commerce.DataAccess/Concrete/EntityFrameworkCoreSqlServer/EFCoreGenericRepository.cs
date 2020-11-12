@@ -43,7 +43,7 @@ namespace E_Commerce.DataAccess.Concrete.EntityFrameworkCoreSqlServer
             }
         }
 
-        public void Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
             using (var context = new TContext())
             {

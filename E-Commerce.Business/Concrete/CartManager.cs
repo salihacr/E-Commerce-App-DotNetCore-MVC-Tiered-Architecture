@@ -12,6 +12,40 @@ namespace E_Commerce.Business.Concrete
             _cartRepository = cartRepository;
         }
 
+        public void AddToCart(string userId, int productId, int quantity)
+        {
+            var cart = GetCartByUserId(userId);
+            if (cart != null)
+            {
+                var index = cart.CartItems.FindIndex(i => i.ProductId == productId);
+                // eklenmek isteyen ürün sepette yoksa yeni oluştur (ekleme)
+                if (index < 0)
+                {
+                    cart.CartItems.Add(new CartItem()
+                    {
+                        ProductId = productId,
+                        Quantity = quantity,
+                        CartId = cart.Id
+                    });
+                }
+                // eklenmek isteyen ürün sepette var mı (güncelleme)
+                else
+                {
+                    cart.CartItems[index].Quantity += quantity;
+                }
+                _cartRepository.Update(cart);
+            }
+        }
+
+        public void DeleteFromCart(string userId, int productId)
+        {
+            var cart = GetCartByUserId(userId);
+            if (cart != null)
+            {
+                _cartRepository.DeleteFromCart(cart.Id, productId);
+            }
+        }
+
         public Cart GetCartByUserId(string userId)
         {
             return _cartRepository.GetByUserId(userId);
