@@ -10,14 +10,14 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Name</label>
             <div class="col-sm-10">
-                <input class="form-control" asp-for="Name">
+                <input id="productName" class="form-control" asp-for="Name">
                 <span class="text-danger" asp-validation-for="Name"></span>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Url</label>
             <div class="col-sm-10">
-                <input class="form-control" asp-for="Url" />
+                <input id="productUrl" class="form-control" asp-for="Url" readonly/>
                 <span class="text-danger" asp-validation-for="Url"></span>
             </div>
         </div>
@@ -87,5 +87,29 @@
     <script src="/modules/ckeditor/ckeditor.js"></script>
     <script>
         CKEDITOR.replace('editor');
+    </script>
+      <script>
+        $(document).ready(function () {
+
+        $('#productName').keyup(function () {
+
+            const trCharsMap = {
+                Ç: 'C', Ö: 'O', Ş: 'S', İ: 'I', I: 'i', Ü: 'U', Ğ: 'G',
+                ç: 'c', ö: 'o', ş: 's', ı: 'i', ü: 'u', ğ: 'g'
+            };
+
+            var text = $('#productName').val();
+
+            for (var char in trCharsMap) {
+                text = text.replace(new RegExp('[' + char + ']', 'g'), trCharsMap[char]);
+            }
+            var url = text.replace(/[^-a-zA-Z0-9\s]+/ig, '')
+                .replace(/\s/gi, "-")
+                .replace(/[-]+/gi, "-")
+                .toLowerCase();
+
+            $('#productUrl').val(url);
+        });
+    });
     </script>
 }
