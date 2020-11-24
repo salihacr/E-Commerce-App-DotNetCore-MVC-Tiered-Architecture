@@ -182,6 +182,20 @@ namespace E_Commerce.MVC
                         defaults: new { controller = "Admin", Action = "EditUser" }
                     );
 
+                    /*Orders*/
+                    endpoints.MapControllerRoute(
+                       name: "adminorders",
+                       pattern: "admin/order/list",
+                       defaults: new { controller = "Admin", Action = "OrderList" }
+                   );
+                   // sipariş onay sayfası
+                   // gelen siparişlerin durumları güncellenir, kargoya verildi, ürün iptal edildi gibi haberler verilir.
+                    endpoints.MapControllerRoute(
+                        name: "adminuseredit",
+                        pattern: "admin/order/{id?}",
+                        defaults: new { controller = "Admin", Action = "EditOrder" }
+                    );
+
 
                     /*Products*/
                     endpoints.MapControllerRoute(
