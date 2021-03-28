@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using E_Commerce.Entities.Concrete;
 
-namespace E_Commerce.Entities.Concrete
+namespace E_Commerce.MVC.Models
 {
-    public class Order
-    {       
-        public int Id { get; set; }
+    public class OrderListModel
+    {
+        public int OrderId { get; set; }
         public string OrderNumber { get; set; }
         public DateTime OrderDate { get; set; }
         public string UserId { get; set; }
@@ -17,23 +19,22 @@ namespace E_Commerce.Entities.Concrete
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Note { get; set; }
-        public string PaymentId { get; set; }
-        public string ConversationId { get; set; }
         public EnumPaymentType PaymentType { get; set; }
         public EnumOrderState OrderState { get; set; }
-        public List<OrderItem> OrderItems { get; set; }
+        public List<OrderItemModel> OrderItems { get; set; }
+
+        public double TotalPrice()
+        {
+            return OrderItems.Sum(i => i.Price * i.Quantity);
+        }
     }
 
-    public enum EnumPaymentType
+    public class OrderItemModel
     {
-        CreditCard=0,
-        Eft=1
+        public int OrderItemId { get; set; }
+        public double Price { get; set; }
+        public string Name { get; set; }
+        public string ImageUrl { get; set; }
+        public int Quantity { get; set; }
     }
-
-    public enum EnumOrderState
-    {
-        waiting=0,
-        unpaid=1,
-        completed=2
-    } 
 }

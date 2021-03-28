@@ -4,14 +4,16 @@ using E_Commerce.DataAccess.Concrete.EntityFrameworkCoreSqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace E_Commerce.DataAccess.Migrations
 {
     [DbContext(typeof(AvocodeContext))]
-    partial class AvocodeContextModelSnapshot : ModelSnapshot
+    [Migration("20210328141612_lasttt")]
+    partial class lasttt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,9 +92,6 @@ namespace E_Commerce.DataAccess.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ConversationId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -112,12 +111,6 @@ namespace E_Commerce.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrderState")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PaymentId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PaymentType")
                         .HasColumnType("int");
 
                     b.Property<string>("Phone")

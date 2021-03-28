@@ -6,5 +6,6 @@ namespace E_Commerce.DataAccess.Abstract
     {
         Cart GetByUserId(string userId);
         void DeleteFromCart(int cartId, int productId);
+        void ClearCart(int cartId);
     }
 }
